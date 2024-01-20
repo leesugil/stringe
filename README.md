@@ -1,0 +1,2 @@
+# stringe
+string.h eXtended
