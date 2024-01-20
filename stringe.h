@@ -3,4 +3,4 @@
 
 #include "getword.h"
 
-#endif	/* STRINGE_H
+#endif	/* STRINGE_H */
