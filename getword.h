@@ -32,8 +32,8 @@ int getword(char *word, int lim)
 void testgetword()
 {
 	int maxchar = 100;
-	char c, word[maxchar];
-	while ((c = getword(word, maxchar)) != EOF)
+	char word[maxchar];
+	while (getword(word, maxchar) != EOF)
 		fprintf(stderr, "\"%s\"\n", word);
 }
 
@@ -63,8 +63,8 @@ int sgetword(char **s, char *word, int lim)
 void testsgetword(char *s)
 {
 	int maxchar = 100;
-	char c, word[maxchar];
-	while ((c = sgetword(&s, word, maxchar)) != EOF && c != '\0')
+	char word[maxchar];
+	while (sgetword(&s, word, maxchar) != '\0')
 		fprintf(stderr, "\"%s\"\n", word);
 }
 
@@ -94,8 +94,8 @@ int getalnum(char *word, int lim)
 void testgetalnum()
 {
 	int maxchar = 100;
-	char c, word[maxchar];
-	while ((c = getalnum(word, maxchar)) != EOF)
+	char word[maxchar];
+	while (getalnum(word, maxchar) != EOF)
 		fprintf(stderr, "\"%s\"\n", word);
 }
 
@@ -125,8 +125,8 @@ int sgetalnum(char **s, char *word, int lim)
 void testsgetalnum(char *s)
 {
 	int maxchar = 100;
-	char c, word[maxchar];
-	while ((c = sgetalnum(&s, word, maxchar)) != EOF && c != '\0')
+	char word[maxchar];
+	while (sgetalnum(&s, word, maxchar) != '\0')
 		fprintf(stderr, "\"%s\"\n", word);
 }
 
@@ -161,8 +161,8 @@ int getwordg(char *word, int lim, int (*crit)(char ))
 void testgetwordg(int (*crit)(char ))
 {
 	int maxchar = 100;
-	char c, word[maxchar];
-	while ((c = getwordg(word, maxchar, crit)) != EOF)
+	char word[maxchar];
+	while (getwordg(word, maxchar, crit) != EOF)
 		fprintf(stderr, "\"%s\"\n", word);
 }
 
@@ -192,8 +192,8 @@ int sgetwordg(char **s, char *word, int lim, int (*crit)(char ))
 void testsgetwordg(char *s, int (*crit)(char ))
 {
 	int maxchar = 100;
-	char c, word[maxchar];
-	while ((c = sgetwordg(&s, word, maxchar, crit)) != EOF && c != '\0')
+	char word[maxchar];
+	while (sgetwordg(&s, word, maxchar, crit) != '\0')
 		fprintf(stderr, "\"%s\"\n", word);
 }
 
