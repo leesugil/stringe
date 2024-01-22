@@ -32,9 +32,9 @@ int getword(char *word, int lim)
 void testgetword()
 {
 	int maxchar = 100;
-	char word[maxchar];
-	getword(word, maxchar);
-	fprintf(stderr, "%s\n", word);
+	char c, word[maxchar];
+	while ((c = getword(word, maxchar)) != EOF)
+		fprintf(stderr, "\"%s\"\n", word);
 }
 
 /* sgetword: get next word from string while reducing it */
@@ -63,9 +63,9 @@ int sgetword(char **s, char *word, int lim)
 void testsgetword(char *s)
 {
 	int maxchar = 100;
-	char word[maxchar];
-	sgetword(&s, word, maxchar);
-	fprintf(stderr, "%s\n", word);
+	char c, word[maxchar];
+	while ((c = sgetword(&s, word, maxchar)) != EOF && c != '\0')
+		fprintf(stderr, "\"%s\"\n", word);
 }
 
 #endif	/* GETWORD_H */
