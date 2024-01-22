@@ -68,4 +68,66 @@ void testsgetword(char *s)
 		fprintf(stderr, "\"%s\"\n", word);
 }
 
+/* getalnum: get next word or character or number from input */
+int getalnum(char *word, int lim)
+{
+	int c;
+	char *w = word;
+
+	while (isspace(c = getchar()))
+		;
+	if (c != EOF)
+		*w++ = c;
+	if (!isalnum(c)) {
+		*w = '\0';
+		return c;
+	}
+	for ( ; --lim > 0; w++)
+		if (!isalnum(*w = getchar())) {
+			ungetc(*w, stdin);
+			break;
+		}
+	*w = '\0';
+	return word[0];
+}
+
+void testgetalnum()
+{
+	int maxchar = 100;
+	char c, word[maxchar];
+	while ((c = getalnum(word, maxchar)) != EOF)
+		fprintf(stderr, "\"%s\"\n", word);
+}
+
+/* sgetalnum: getalnum from string while reducing it */
+int sgetalnum(char **s, char *word, int lim)
+{
+	int c;
+	char *w = word;
+
+	while (isspace(c = *(*s)++))
+		;
+	if (c != EOF)
+		*w++ = c;
+	if (!isalnum(c)) {
+		*w = '\0';
+		return c;
+	}
+	for ( ; --lim > 0; w++)
+		if (!isalnum(*w = *(*s)++)) {
+			(*s)--;
+			break;
+		}
+	*w = '\0';
+	return word[0];
+}
+
+void testsgetalnum(char *s)
+{
+	int maxchar = 100;
+	char c, word[maxchar];
+	while ((c = sgetalnum(&s, word, maxchar)) != EOF && c != '\0')
+		fprintf(stderr, "\"%s\"\n", word);
+}
+
 #endif	/* GETWORD_H */
