@@ -130,4 +130,71 @@ void testsgetalnum(char *s)
 		fprintf(stderr, "\"%s\"\n", word);
 }
 
+int ismathexpr(char c)
+{
+	return isalnum(c) || (c == '.') || (c == '-');
+}
+
+/* getwordg: getword generalized */
+int getwordg(char *word, int lim, int (*crit)(char ))
+{
+	int c;
+	char *w = word;
+
+	while (isspace(c = getchar()))
+		;
+	if (c != EOF)
+		*w++ = c;
+	if (!crit(c)) {
+		*w = '\0';
+		return c;
+	}
+	for ( ; --lim > 0; w++)
+		if (!crit(*w = getchar())) {
+			ungetc(*w, stdin);
+			break;
+		}
+	*w = '\0';
+	return word[0];
+}
+
+void testgetwordg(int (*crit)(char ))
+{
+	int maxchar = 100;
+	char c, word[maxchar];
+	while ((c = getwordg(word, maxchar, crit)) != EOF)
+		fprintf(stderr, "\"%s\"\n", word);
+}
+
+/* sgetwordg: getwordg from string while reducing it */
+int sgetwordg(char **s, char *word, int lim, int (*crit)(char ))
+{
+	int c;
+	char *w = word;
+
+	while (isspace(c = *(*s)++))
+		;
+	if (c != EOF)
+		*w++ = c;
+	if (!crit(c)) {
+		*w = '\0';
+		return c;
+	}
+	for ( ; --lim > 0; w++)
+		if (!crit(*w = *(*s)++)) {
+			(*s)--;
+			break;
+		}
+	*w = '\0';
+	return word[0];
+}
+
+void testsgetwordg(char *s, int (*crit)(char ))
+{
+	int maxchar = 100;
+	char c, word[maxchar];
+	while ((c = sgetwordg(&s, word, maxchar, crit)) != EOF && c != '\0')
+		fprintf(stderr, "\"%s\"\n", word);
+}
+
 #endif	/* GETWORD_H */
